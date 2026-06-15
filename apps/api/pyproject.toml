@@ -32,6 +32,7 @@ ai = [
     "langchain-google-genai>=2.0",
     "langchain-anthropic>=0.2",
     "langchain-openai>=0.2",
+    "temporalio>=1.6",  # durable workflows
 ]
 
 [tool.ruff]

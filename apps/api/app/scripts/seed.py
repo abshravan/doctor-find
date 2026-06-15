@@ -9,8 +9,7 @@ import asyncio
 
 from sqlalchemy import select
 
-from app.db.session import SessionLocal, engine
-from app.db.session import Base
+from app.db.session import Base, SessionLocal, engine
 from app.models import Clinic, ConsultType, Doctor, Specialty
 
 SPECIALTIES = [

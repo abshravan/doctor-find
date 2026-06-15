@@ -8,7 +8,7 @@ WORKDIR /app
 
 # Install deps first for layer caching
 COPY pyproject.toml ./
-RUN pip install --upgrade pip && pip install -e ".[dev]"
+RUN pip install --upgrade pip && pip install -e ".[dev,ai]"
 
 COPY . .
 

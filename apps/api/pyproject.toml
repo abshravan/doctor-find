@@ -25,6 +25,14 @@ dev = [
     "ruff>=0.5",
     "mypy>=1.10",
 ]
+# AI path (LangGraph + provider SDKs). Imported lazily so the app/tests run without it.
+ai = [
+    "langgraph>=0.2",
+    "langchain-core>=0.3",
+    "langchain-google-genai>=2.0",
+    "langchain-anthropic>=0.2",
+    "langchain-openai>=0.2",
+]
 
 [tool.ruff]
 line-length = 100
@@ -32,6 +40,9 @@ target-version = "py311"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
+# B008: FastAPI's Depends()-in-defaults is the idiomatic pattern.
+# UP042: str+Enum is intentional (string serialization for Pydantic/SQLAlchemy enums).
+ignore = ["B008", "UP042"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"

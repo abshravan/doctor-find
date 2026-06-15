@@ -108,9 +108,20 @@ playbook (API design, CI/CD, Docker, k8s, observability).
 ## 🧭 Status
 
 This is an **MVP scaffold + design blueprint**. The backend boots with a health check, sample
-doctor-discovery and triage endpoints (stubbed AI), and the structure to grow into the full
-architecture. It is intentionally a *modular monolith* (see Phase 3) — easy to run, easy to split
-later.
+doctor-discovery, and a **working AI Symptom Navigator**. It is intentionally a *modular monolith*
+(see Phase 3) — easy to run, easy to split later.
+
+**AI triage (implemented):** `POST /triage` runs a real pipeline —
+1. **Deterministic emergency red-flag pre-filter** (runs before any LLM; emergencies route to
+   112/108 and never reach the model),
+2. **LangGraph + LLM navigation** via a **provider-agnostic gateway** (Gemini → Claude → OpenAI
+   failover) with **structured output** and **catalog-grounded** specialty routing
+   (off-catalog answers are coerced — anti-hallucination),
+3. **Deterministic fallback** so the endpoint works with **zero API keys**.
+
+Add a `GEMINI_API_KEY` (and `pip install -e ".[dev,ai]"`) to activate the LLM path; without it,
+the deterministic navigator serves requests. Code: `apps/api/app/agents/{triage,triage_graph}.py`,
+`apps/api/app/services/{llm_gateway,specialty_catalog}.py`. Tests: `apps/api/tests/test_triage.py`.
 
 ## ⚖️ License & Disclaimer
 
